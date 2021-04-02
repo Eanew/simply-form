@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/style.css" />
+    <title>Авторизация</title>
+  </head>
+  <body>
+    <section class="auth">
+      <form class="auth__form" action="" method="post">
+        <h1 class="auth__title">
+          Вход
+        </h1>
+        
+        <p class="auth__bonus hidden">
+          У вас накоплено баллов: <span class="auth__bonus-count">0</span>
+        </p>
+
+        <fieldset class="auth__fieldset">
+          <label class="auth__field">
+            <input
+              class="auth__input auth__input--email"
+              type="email"
+              name="email"
+              placeholder="Логин"
+              required
+            />
+
+            <svg class="auth__field-icon" width="32" height="22" alt="email" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.25 298.58">
+              <defs><style>.cls-1{fill:#b1b3b7}</style></defs>
+              <path class="cls-1" d="M2.31 298.58l127.67-128.46 82.01 68.81 90.23-74.85 125.99 134.5H2.31zM0 61.71v220.66l120.43-118.29L0 61.71zM435.25 54.17V286.9L310.93 156.71 435.25 54.17z"/>
+              <path class="cls-1" d="M0 0v44.87l211.99 179.27L435.25 37.75V0H0z"/>
+            </svg>
+          </label>
+
+          <label class="auth__field">
+            <input
+              class="auth__input auth__input--password"
+              type="password"
+              name="password"
+              placeholder="Пароль"
+              required
+            />
+
+            <svg class="auth__field-icon" width="24" height="32" alt="password" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 347.36 455.4">
+              <path d="M292.21 214.32H55.02a55 55 0 00-55 55v131a55 55 0 0055 55h237.19a55 55 0 0055.15-55v-131a55 55 0 00-55.15-55zm-89.58 144.59a70.75 70.75 0 01.43 7.92c0 26.79-13.1 48.39-29.38 48.39s-29.38-21.6-29.38-48.39a70.72 70.72 0 01.44-7.92 56.6 56.6 0 1157.89 0z" fill="#b1b3b7"/>
+              <path d="M265.79 231.21c-12 115.67 60.64-219-101.18-206.89C15.41 35.45 89.81 354 80.01 238 65.32 64.12 123.34 30.51 173.68 30.51s108.53 43.13 92.11 200.7z" fill="none" stroke="#b1b3b7" stroke-miterlimit="10" stroke-width="48"/>
+            </svg>
+          </label>
+        </fieldset>
+
+        <small class="auth__message hidden"></small>
+
+        <button class="auth__button" type="submit">
+          Войти
+        </button>
+      </form>
+    </section>
+
+    <script src="./js/script.js"></script>
+  </body>
+</html>

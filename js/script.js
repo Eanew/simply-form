@@ -7,6 +7,11 @@ const Method = {
 
 const MIN_PASSWORD_LENGTH = 6;
 
+const Regular = {
+    VALID_EMAIL: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+    VALID_PASSWORD: new RegExp(`.{${MIN_PASSWORD_LENGTH}}`),
+};
+
 const form = document.querySelector(`.auth__form`);
 const title = form.querySelector(`.auth__title`);
 const userBonus = form.querySelector(`.auth__bonus`);
@@ -51,6 +56,9 @@ const API = class {
                 }
                 return response.data || {};
             })
+            .catch(error => {
+                throw error;
+            });
     }
     
     logIn(email, password) {
@@ -67,40 +75,42 @@ const API = class {
     }
 };
 
-const api = new API(END_POINT);
-
 const Validity = class {
     constructor(...definitions) {
-        this._fields = definitions
-            .reduce((fields, { name, regular, requirement }) => ({ ...fields, [name]: { regular, requirement } }), {});
+        this._fields = {};
+        definitions.forEach(definition => this.add(definition));
     }
 
-    define({ name, regular, requirement }) {
-        this._fields[name] = { regular, requirement };
+    add({ name = ``, verification = new RegExp(), requirement = `Пожалуйста, введите корректные данные` }) {
+        if (typeof verification === `function`) verification.test = verification;
+
+        this._fields[name] = { verification, requirement };
         return this;
     }
 
     check(inputElement) {
         if (!this._fields[inputElement.name]) return true;
 
-        const { regular, requirement } = this._fields[inputElement.name];
-        const message = regular.test(inputElement.value) ? `` : requirement;
+        const { verification, requirement } = this._fields[inputElement.name];
+        const message = verification.test(inputElement.value) ? `` : requirement;
         
         inputElement.setCustomValidity(message);
         return !message;
     }
 };
 
+const api = new API(END_POINT);
+
 const validity = new Validity({
-    name: emailInput.name,
-    regular: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-    requirement: `Пожалуйста, введите корректный адрес электронной почты`,
-},
-{
-    name: passwordInput.name,
-    regular: new RegExp(`.{${MIN_PASSWORD_LENGTH}}`),
-    requirement: `Минимальная длина пароля: ${MIN_PASSWORD_LENGTH} символов`,
-});
+        name: emailInput.name,
+        verification: Regular.VALID_EMAIL,
+        requirement: `Пожалуйста, введите корректный адрес электронной почты`,
+    },
+    {
+        name: passwordInput.name,
+        verification: Regular.VALID_PASSWORD,
+        requirement: `Минимальная длина пароля: ${MIN_PASSWORD_LENGTH} символов`,
+    });
 
 form.addEventListener(`input`, evt => validity.check(evt.target));
 
@@ -109,6 +119,7 @@ form.addEventListener(`submit`, evt => {
 
     if (!validity.check(emailInput) || !validity.check(passwordInput)) return;
 
+    hideErrorMessage();
     emailInput.disabled = true;
     passwordInput.disabled = true;
     button.disabled = true;
@@ -127,6 +138,3 @@ form.addEventListener(`submit`, evt => {
             button.disabled = false;
         });
 });
-
-emailInput.addEventListener(`focus`, hideErrorMessage);
-passwordInput.addEventListener(`focus`, hideErrorMessage);

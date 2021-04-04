@@ -136,5 +136,6 @@ form.addEventListener(`submit`, evt => {
             emailInput.disabled = false;
             passwordInput.disabled = false;
             button.disabled = false;
+            button.blur();
         });
 });

@@ -191,8 +191,12 @@ body {
   width: 100%;
   padding: 12px 0 16px;
   cursor: pointer;
-  -webkit-transition-duration: 0.1s;
-          transition-duration: 0.1s;
+  -webkit-transition-duration: .1s, .3s, .5s;
+          transition-duration: .1s, .3s, .5s;
+  -webkit-transition-property: color, opacity, -webkit-transform;
+  transition-property: color, opacity, -webkit-transform;
+  transition-property: transform, color, opacity;
+  transition-property: transform, color, opacity, -webkit-transform;
   -webkit-transform: perspective(500px);
           transform: perspective(500px);
   -webkit-transform-origin: bottom;
@@ -219,13 +223,11 @@ body {
 .auth__button:active {
   -webkit-transform: perspective(500px) translateZ(-10px);
           transform: perspective(500px) translateZ(-10px);
-  color: #bbb8b8;
 }
 
 .auth__button:disabled, .auth__button:disabled:hover, .auth__button:disabled:focus, .auth__button:disabled:active {
   -webkit-transform: perspective(500px) translateZ(-5px);
           transform: perspective(500px) translateZ(-5px);
-  color: #edecec;
   opacity: 0.6;
 }
 /*# sourceMappingURL=style.css.map */

@@ -159,7 +159,8 @@ body {
         width: 100%;
         padding: 12px 0 16px;
         cursor: pointer;
-        transition-duration: 0.1s;
+        transition-duration: .1s, .3s, .5s;
+        transition-property: transform, color, opacity;
         transform: perspective(500px);
         transform-origin: bottom;
         text-align: center;
@@ -181,7 +182,6 @@ body {
 
         &:active {
             transform: perspective(500px) translateZ(-10px);
-            color: darken(#edecec, 20%);
         }
         
         &:disabled,
@@ -189,7 +189,6 @@ body {
         &:disabled:focus,
         &:disabled:active {
             transform: perspective(500px) translateZ(-5px);
-            color: #edecec;
             opacity: 0.6;
         }
     }

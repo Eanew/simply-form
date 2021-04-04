@@ -12,38 +12,24 @@ const Regular = {
     VALID_PASSWORD: new RegExp(`.{${MIN_PASSWORD_LENGTH}}`),
 };
 
-const form = document.querySelector(`.auth__form`);
-const title = form.querySelector(`.auth__title`);
-const userBonus = form.querySelector(`.auth__bonus`);
-const bonusCount = userBonus.querySelector(`.auth__bonus-count`);
-const emailInput = form.querySelector(`.auth__input--email`);
-const passwordInput = form.querySelector(`.auth__input--password`);
-const errorMessage = document.querySelector(`.auth__message`);
-const button = form.querySelector(`.auth__button`);
-
-const greet = name => {
-    title.textContent = `Здравствуйте${name ? `, ${name}!` : `!`}`;
-};
-
-const showBonus = bonus => {
-    bonusCount.textContent = parseInt(bonus);
-    userBonus.classList.remove(`hidden`);
-};
-
-const showErrorMessage = ({ message }) => {
-    errorMessage.textContent = message;
-    errorMessage.classList.remove(`hidden`);
-};
-
-const hideErrorMessage = () => {
-    errorMessage.classList.add(`hidden`);
-};
-
 const API = class {
     constructor(endPoint) {
         this._endPoint = endPoint;
     }
-
+    
+    logIn(email, password) {
+        return this._request(`user/login`, {
+            method: Method.POST,
+            headers: new Headers({ 'Content-Type': `application/json` }),
+            body: JSON.stringify({ email, password }),
+            credentials: `include`,
+        });
+    }
+    
+    getUserData() {
+        return this._request(`user/data`, { credentials: `include` });
+    }
+    
     _request(path, { method = Method.GET, headers = new Headers(), body = null, credentials = `same-origin` }) {
         const url = `${this._endPoint}/${path}`;
         const options = { method, headers, body, credentials };
@@ -59,19 +45,6 @@ const API = class {
             .catch(error => {
                 throw error;
             });
-    }
-    
-    logIn(email, password) {
-        return this._request(`user/login`, {
-            method: Method.POST,
-            headers: new Headers({ 'Content-Type': `application/json` }),
-            body: JSON.stringify({ email, password }),
-            credentials: `include`,
-        });
-    }
-    
-    getUserData() {
-        return this._request(`user/data`, { credentials: `include` });
     }
 };
 
@@ -97,6 +70,33 @@ const Validity = class {
         inputElement.setCustomValidity(message);
         return !message;
     }
+};
+
+const form = document.querySelector(`.auth__form`);
+const title = form.querySelector(`.auth__title`);
+const userBonus = form.querySelector(`.auth__bonus`);
+const bonusCount = userBonus.querySelector(`.auth__bonus-count`);
+const emailInput = form.querySelector(`.auth__input--email`);
+const passwordInput = form.querySelector(`.auth__input--password`);
+const errorMessage = document.querySelector(`.auth__message`);
+const button = form.querySelector(`.auth__button`);
+
+const greet = name => {
+    title.textContent = `Здравствуйте${name ? `, ${name}!` : `!`}`;
+};
+
+const showBonus = bonus => {
+    bonusCount.textContent = parseInt(bonus);
+    userBonus.classList.remove(`hidden`);
+};
+
+const showErrorMessage = ({ message }) => {
+    errorMessage.textContent = message;
+    errorMessage.classList.remove(`hidden`);
+};
+
+const hideErrorMessage = () => {
+    errorMessage.classList.add(`hidden`);
 };
 
 const api = new API(END_POINT);

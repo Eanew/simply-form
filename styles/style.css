@@ -158,6 +158,10 @@ body {
   background-color: rgba(225, 93, 93, 0.16);
 }
 
+.auth__input:disabled, .auth__input:disabled:hover, .auth__input:disabled:focus, .auth__input:disabled:active {
+  color: #6f7278;
+}
+
 .auth__field-icon {
   position: absolute;
   top: 50%;
@@ -218,7 +222,10 @@ body {
   color: #bbb8b8;
 }
 
-.auth__button:disabled {
+.auth__button:disabled, .auth__button:disabled:hover, .auth__button:disabled:focus, .auth__button:disabled:active {
+  -webkit-transform: perspective(500px) translateZ(-5px);
+          transform: perspective(500px) translateZ(-5px);
+  color: #edecec;
   opacity: 0.6;
 }
 /*# sourceMappingURL=style.css.map */

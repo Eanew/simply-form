@@ -122,6 +122,13 @@ body {
         &:focus:invalid {
             background-color: rgba(225, 93, 93, 0.16);
         }
+
+        &:disabled,
+        &:disabled:hover,
+        &:disabled:focus,
+        &:disabled:active {
+            color: #6f7278;
+        }
     }
 
     &__field-icon {
@@ -176,8 +183,13 @@ body {
             transform: perspective(500px) translateZ(-10px);
             color: darken(#edecec, 20%);
         }
-
-        &:disabled {
+        
+        &:disabled,
+        &:disabled:hover,
+        &:disabled:focus,
+        &:disabled:active {
+            transform: perspective(500px) translateZ(-5px);
+            color: #edecec;
             opacity: 0.6;
         }
     }
